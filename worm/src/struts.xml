@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+    <!-- <include file="struts-main.xml" /> -->
+   
+<!--用到json必须继承"json-default"-->
+    <!-- <package name="gwap-default" extends="json-default">
+        <global-results>
+            <result>/WEB-INF/jsp/fail.jsp</result>
+        </global-results>
+    </package>
+ -->
+ 
+ 
+    <!-- 这是一个重要的地方，很多人在使用<s:include>子页面后，发现子页面乱码，怎么改都不行，原因就在次，struts2的默认编码为UTF-8，乱码的同志请看看你的jsp页面上的编码是不是和这个不一致呢。只要把这里和jsp编码改一致就行了 -->
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+    <!-- 告诉struts2，我要用spring装配工厂，其实默认就是这个了-_-!!! -->
+    <constant name="struts.objectFactory" value="spring" />
+    <!-- struts2的扩展名，比如struts1的时候，用的.do,struts2默认为.action，可以改成其它的，比如.dxd -->
+    <constant name="struts.action.extension" value="action" />
+    <!-- 资源文件 -->
+    <constant name="struts.custom.i18n.resources"
+        value="messageResource">
+    </constant>
+ 
+    <!-- 用户注册类 -->
+    <!-- abstract属性就说明了该action继承自自己定义的基础action，而class采用的registerAction是由spring产生的 -->
+    <package name="register" extends="struts-default">
+        
+        <action name="LoginAction" class="loginActionBean" method="loginM">
+            <!-- 注册成功 -->
+            <result name="success">/WEB-INF/success.jsp</result>
+            <!-- 注册失败 -->
+            <result name="error">/WEB-INF/error.jsp</result>        
+        </action>
+        
+        <action name="ResetAction" class="resetActionBean" method="resetM">
+            <!-- 修改成功 -->
+            <result name="success">index.jsp</result>
+                 
+        </action>
+        <action name="RegAction" class="regActionBean" method="regM">
+             <result name="success">index.jsp</result>
+        </action>
+    </package> 
+</struts>    

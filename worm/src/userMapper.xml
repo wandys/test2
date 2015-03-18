@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emar.cps.dao.UserDao">
+
+ <!-- 使用已经配置的java类全路径的别名test,映射数据库字段和java类字段 -->
+ <resultMap type="usermap" id="user">
+  <id property="id" column="id" />
+  <result property="userName" column="user_name" />
+  <result property="pw" column="pass_word" />
+  <result property="sex" column="sex" />
+  <result property="age" column="age" />
+  <result property="birthday" column="birthday" />
+  <result property="phone" column="phone" />
+  <result property="email" column="email" />
+  <result property="address" column="address" />
+  <result property="role" column="role" />
+  
+ </resultMap>
+ 
+ 
+ <resultMap type="com.eamr.cps.db.userListDB" id="users">
+  <collection property="list" ofType="usermap">
+  <id property="id" column="id" />
+  <result property="userName" column="user_name" />
+  <result property="pw" column="pass_word" />
+  <result property="sex" column="sex" />
+  <result property="age" column="age" />
+  <result property="birthday" column="birthday" />
+  <result property="phone" column="phone" />
+  <result property="email" column="email" />
+  <result property="address" column="address" />
+  <result property="role" column="role" />
+  </collection>
+ </resultMap>
+
+ 
+ 
+
+ <!-- 查询语句，输入参数为String类型，返回为user类对象 -->
+<!--   <select id="selectuser" parameterType="String" resultMap="user">
+  select
+  * from
+  reg_user where user_name=#{userName};
+ </select>
+  -->
+ 
+ <select id="selectlistuser" parameterType="String" resultMap="user">
+  select
+  * from
+  reg_user where user_name=#{userName};
+ </select>
+ 
+ <update id="updateuser" parameterType="String">
+ update reg_user set pass_word="123456" where
+ user_name=#{username};
+ </update>
+ 
+ <!-- 插入语句，输入参数为ccl类型对象 -->
+<!--  <insert id="insertuser" parameterType="com.eamr.cps.db.userDB">
+  insert into
+  reg_user(user_name,pass_word,sex,age,birthday,phone,email,address,role)
+  values(#{userName},#{pw},#{sex},#{age},#{birthday},#{phone},#{email},#{address},#{role});
+ </insert>
+ -->
+
+ <insert id="insertuser" parameterType="Map">
+  insert into
+  reg_user(user_name,pass_word,sex,age,birthday,phone,email,address,role)
+  values(#{userName},#{pw},#{sex},#{age},#{birthday},#{phone},#{email},#{address},#{role});
+ </insert>
+
+ 
+
+ </mapper>
+ 
+ 
+ 

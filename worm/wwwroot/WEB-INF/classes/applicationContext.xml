@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context/spring-context
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+    
+<!-- 配置数据源 -->
+<!-- <context:property-placeholder location="classpath:jdbc.properties" /> -->
+
+<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+            </list>
+        </property>
+</bean>
+
+
+
+<!--配置数据源bean  -->
+<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        p:driverClassName="${jdbc.driverClassName}"
+        p:url="${jdbc.url}"
+        p:username="${jdbc.username}"
+        p:password="${jdbc.password}"
+    />
+ <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+        p:dataSource-ref="dataSource"
+    />
+    
+    
+    
+    
+     <!-- <tx:annotation-driven transaction-manager="transactionManager" />
+ -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="dataSource" ref="dataSource" />
+      <!-- <property name="transactionFactory">
+        <bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory" />
+      </property> -->
+      <property name="mapperLocations">
+          <list>
+              <value>classpath:cps_confirm_log.xml</value>
+              <value>classpath:userMapper.xml</value>
+          </list>
+      </property>
+      <property name="configLocation">  
+        <value>classpath:mybatis_config.xml</value>  
+    </property>  
+    </bean>
+    
+    <!-- 将mybatis的  DAO interface 和 数据sql绑定  --> 
+    <bean id="cpsConLogDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.emar.cps.dao.CpsConLogDao"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean> 
+     
+     <bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.emar.cps.dao.UserDao"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+   <!--  配置相应的service-->
+     <bean id="cpsService" class="com.eamr.cps.serviceimpl.cpsconfirmlogserviceimpl">
+         <property name="cpsConLogDao" ref="cpsConLogDao"></property>
+      </bean>
+     
+     <bean id="userService" class="com.eamr.cps.serviceimpl.UserServiceimpl">
+     	<property name="userDao" ref="userDao"></property> 
+     </bean>
+     
+     
+     <!--配置Action bean  -->
+     <bean id="LoginAction" class="com.eamr.cps.action.LoginAction">
+     	<property name="userService" ref="userService"></property> 
+     </bean>
+     
+       <bean id="resetAction" class="com.eamr.cps.action.LoginAction">
+     	<property name="userService" ref="userService"></property> 
+     </bean>
+     
+       <bean id="regAction" class="com.eamr.cps.action.LoginAction">
+     	<property name="userService" ref="userService"></property> 
+     	<property name="userDao" ref="userDao"></property> 
+     </bean>
+</beans>

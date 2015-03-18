@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emar.cps.dao.CpsConLogDao">
+
+ <!-- 使用已经配置的java类全路径的别名test,映射数据库字段和java类字段 -->
+ <resultMap type="cclmap" id="ccl">
+  <id property="id" column="id" />
+  <result property="on" column="order_no" />
+  <result property="wid" column="website_id" />
+  <result property="cid" column="campaign_id" />
+  <result property="starttime" column="start_time" />
+  <result property="updatetime" column="update_time" />
+ </resultMap>
+ 
+ <!-- sql语句是针对表的操作，而resultMap说明了表和pojo的映射关系 -->
+  <select id="getAllcps" resultMap="ccl">
+  select
+  * from
+  cps_confirm_log;
+ </select>
+ <!-- 查询语句，输入参数为String类型，返回为ccl类对象 -->
+  <select id="getorder" parameterType="String" resultMap="ccl">
+  select
+  * from
+  cps_confirm_log where order_no=#{order_no};
+ </select>
+ 
+ <!-- 插入语句，输入参数为ccl类型对象 -->
+<!--  <insert id="insertorder" parameterType="ccl">
+  insert into
+  cps_confirm_log(website_id,order_no,campaign_id,start_time,update_time)
+  values(#{wid},#{on},#{cid},#{st},#{et});
+ </insert>
+  -->
+<!--   更新语句。输入参数为ccl对象类  
+  <update id="updateorder" parameterType="ccl">
+  update
+  cps_confirm_log
+  set
+campaign_id=#{cid},wbesite_id=#{wid},update_time=#{updatetime} where order_no=#{on};
+ </update>
+  -->
+ <!--删除语句，输入参数为String类型  -->
+  <delete id="deleteorder" parameterType="String">
+  delete from cps_confirm_log
+  where order_no=#{on};
+ </delete>
+ 
+
+ 
+
+ </mapper>
+ 
+ 
+ 

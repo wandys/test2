@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+ <!-- 引入外部属性文件 -->
+ <properties resource="jdbc.properties" />
+ 
+ <!-- 配置基础java类全路径的别名，映射基本数据关系对象 -->
+ <typeAliases>
+  <typeAlias alias="cclmap" type="com.eamr.cps.db.cps_confirm_log" />
+  <typeAlias alias="usermap" type="com.eamr.cps.db.userDB" />
+ </typeAliases>
+
+ 
+
+ <!-- <environments default="development">
+  <environment id="development">
+   <transactionManager type="JDBC" />
+   <dataSource type="POOLED">
+ 
+    <property name="driver" value="${jdbc.driverClassName}" /> 
+    <property name="url" value="${jdbc.url}" />
+    <property name="url" value="jdbc:mysql://127.0.0.1:3306/test" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+   </dataSource>
+
+  </environment>
+ </environments>
+ -->
+<!--各个实际SQLmapper  -->
+ <!-- <mappers>
+  <mapper resource="cps_confirm_log.xml" />
+  
+ </mappers> -->
+<!--  <sqlMap resource="com/broada/demo/dao/ibaties/map/User.xml" /> -->
+ 
+</configuration>
