@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="worm"
+  id="myeclipse.1423388647410"
+  context-root="/worm"
+  j2ee-spec="5.0"
+  archive="worm.war">
+  <attributes>
+    <attribute name="webrootdir" value="wwwroot" />
+  </attributes>
+</project-module>
+
